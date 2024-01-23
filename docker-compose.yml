@@ -1,0 +1,59 @@
+version: "0.0.1"
+services:
+  # PHP service
+  app:
+    build: .
+    container_name: php-app
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  # MariaDB db service
+  db:
+    image: mariadb:11.2.2
+    container_name: mysql-db
+    ports:
+      - "5717:5717"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER_ROOT: ${MARIADB_USER_ROOT}
+    env_file:
+      - ./.env
+    networks:
+      - app-network
+    volumes:
+      - ./database/dump.sql:/docker-entrypoint-initdb.d/init.sql
+  # DBA service
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  # Nginx service
+  nginx:
+    image: nginx:alpine
+    container_name: php-nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+#network driver
+networks:
+  app-network:
+    driver: bridge
