@@ -3,7 +3,6 @@
 // script based on youtube tutorial https://www.youtube.com/watch?v=QdQ2OnLk7-U
 require ('./vendor/autoload.php');
 use Illuminate\Database\Capsule\Manager as Capsule;
-use App\Models\User;
 
 $capsule = new Capsule;
 
@@ -22,9 +21,7 @@ $capsule->setAsGlobal();
 
 $capsule->bootEloquent();
 
-$user = User::find(1);
+require('graphql/boot.php');
 
-
-var_dump($user->addresses->toArray());
 ?> 
 
