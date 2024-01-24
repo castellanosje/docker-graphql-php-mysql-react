@@ -19,13 +19,13 @@ $rootQuery = new ObjectType([
                 return $user;
             }
         ],
-        'users' => [
-            'type' => Type::listOf($userType),
-            'resolve' => function($root, $args) {
-                $users = User::all()->toArray();
-                return $users;
-            }
-        ]
+        // 'users' => [
+        //     'type' => Type::listOf($userType),
+        //     'resolve' => function($root, $args) {
+        //         $users = User::all()->toArray();
+        //         return $users;
+        //     }
+        // ]
     ]
 
 ]);
