@@ -1,4 +1,5 @@
 <?php
+//testing github
 // script based on youtube tutorial https://www.youtube.com/watch?v=QdQ2OnLk7-U
 require ('./vendor/autoload.php');
 use Illuminate\Database\Capsule\Manager as Capsule;
