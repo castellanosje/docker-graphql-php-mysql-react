@@ -14,4 +14,3 @@ class Address extends Model {
     }
 };
 
-?>

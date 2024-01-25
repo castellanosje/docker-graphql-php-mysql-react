@@ -2,6 +2,7 @@
 
 require('types.php');
 require('query.php');
+require('mutations.php');
 
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
@@ -9,7 +10,7 @@ use GraphQL\Type\Schema;
 
 $schema = new Schema([
     'query' => $rootQuery,
-    'mutation' => null
+    'mutation' => $rootMutation
 ]);
 
 try{
@@ -40,4 +41,3 @@ header('Content-Type: application/json');
 echo json_encode($output);
 
 
-?>

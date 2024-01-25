@@ -37,4 +37,3 @@ $addressType = new ObjectType([
     ]
 ]);
 
-?>
