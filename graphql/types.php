@@ -1,6 +1,7 @@
 <?php 
 
 use App\Models\User;
+use App\Models\Address;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -33,7 +34,16 @@ $addressType = new ObjectType([
         'id'=>Type::int(),
         'user_id'=>Type::int(),
         'name'=>Type::string(),
-        'description'=>Type::string()
-    ]
+        'description'=>Type::string(),
+        'user' => [
+                'type' => $userType,
+                'resolve' => function($root, $args) {
+                    $addressId = $root['id'];
+                    $address = Address::where('id', $addressId)->with(['user'])->first();
+                    return $address->user->toArray();
+                }
+            ]
+    ],
+    
 ]);
 

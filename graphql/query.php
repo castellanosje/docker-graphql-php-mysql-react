@@ -4,6 +4,7 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
 use App\Models\User;
+use App\Models\Address;
 
 $rootQuery = new ObjectType([
     'name' => 'Query',
@@ -19,13 +20,23 @@ $rootQuery = new ObjectType([
                 return $user;
             }
         ],
-        // 'users' => [
-        //     'type' => Type::listOf($userType),
-        //     'resolve' => function($root, $args) {
-        //         $users = User::all()->toArray();
-        //         return $users;
-        //     }
-        // ]
+        'users' => [
+            'type' => Type::listOf($userType),
+            'resolve' => function($root, $args) {
+                $users = User::all()->toArray();
+                return $users;
+            }
+        ],
+        'address'=>[
+            'type' => $addressType,
+            'args' => [
+                'id' => Type::nonNull(Type::int())
+            ],
+            'resolve'=> function($root, $args){
+                $address = Address::find($args['id'])->toArray();
+                return $address;
+            }
+        ]
     ]
 
 ]);
